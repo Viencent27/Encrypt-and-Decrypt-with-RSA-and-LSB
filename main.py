@@ -8,11 +8,6 @@ from PIL import Image
 
 # Fungsi untuk membuat kunci RSA
 def generate_rsa_keys(p, q):
-  if not isprime(p) or not isprime(q):
-    raise ValueError("Bilangan yang dimasukkan harus bilangan prima!")
-  if p == q:
-    raise ValueError("Bilangan prima tidak boleh sama!")
-  
   # Menghitung nilai n dan m
   n = p * q
   m = (p - 1) * (q - 1)
@@ -114,6 +109,10 @@ def main():
     prime2 = st.number_input("Masukkan bilangan prima kedua:", min_value=2, step=1)
     password = st.text_input("Masukkan Password untuk Melindungi Kunci", type="password")
     if st.button("Buat Kunci"):
+      if not isprime(prime1) or not isprime(prime2):
+        raise ValueError("Bilangan yang dimasukkan harus bilangan prima!")
+      if prime1 == prime2:
+        raise ValueError("Bilangan prima tidak boleh sama!")
       if password and prime1 and prime2:
         if prime1 * prime2 > 61:
           public_key, private_key, n = generate_rsa_keys(prime1, prime2)
