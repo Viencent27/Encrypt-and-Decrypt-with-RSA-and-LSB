@@ -30,10 +30,7 @@ def encrypt_rsa(plain, e, n):
 # Fungsi untuk mendekripsi ciphertext dengan algoritma RSA
 def decrypt_rsa(cipher, d, n):
   # Menggunakan rumus C^d mod n
-  if n < 122:
-    plain = [chr(pow(char, d, n) + n) for char in cipher]
-  else:
-    plain = [chr(pow(char, d, n)) for char in cipher]
+  plain = [chr(pow(char, d, n)) for char in cipher]
   
   return ''.join(plain)
 
@@ -114,7 +111,7 @@ def main():
       if prime1 == prime2:
         raise ValueError("Bilangan prima tidak boleh sama!")
       if password and prime1 and prime2:
-        if prime1 * prime2 > 61:
+        if prime1 * prime2 > 122:
           public_key, private_key, n = generate_rsa_keys(prime1, prime2)
           st.session_state.public_key = public_key
           st.session_state.private_key = private_key
@@ -127,7 +124,7 @@ def main():
           st.success("Kunci berhasil dibuat!")
           st.download_button("Unduh Kunci", data=data, file_name="rsa_key.key")
         else:
-          st.error("Hasil perkalian bilangan prima harus lebih dari 61")
+          st.error("Hasil perkalian bilangan prima harus lebih dari 122")
       else:
         st.error("Bilangan prima dan password tidak boleh kosong.")
 
